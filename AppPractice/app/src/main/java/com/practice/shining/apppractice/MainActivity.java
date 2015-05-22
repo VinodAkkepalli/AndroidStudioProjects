@@ -7,16 +7,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
 
     final int SECOND_ACTIVITY_REQUEST_CODE = 2;
+    TextView text1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        text1=(TextView)findViewById(R.id.text1);
 
         Button button1 = (Button) findViewById(R.id.button1);
         button1.setOnClickListener(new View.OnClickListener() {
@@ -24,13 +28,22 @@ public class MainActivity extends ActionBarActivity {
             public void onClick(View v) {
                 Intent intent1 = new Intent(getApplicationContext(),secondActivity.class);
                 intent1.putExtra("mainactivity_message", "Hi From MainActivity");
-                //startActivityForResult(intent1,SECOND_ACTIVITY_REQUEST_CODE, extra1);
-                startActivity(intent1);
+                startActivityForResult(intent1,SECOND_ACTIVITY_REQUEST_CODE);
+                //startActivity(intent1);
             }
         });
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == SECOND_ACTIVITY_REQUEST_CODE){
+           text1.setText(data.getStringExtra("TYPED_MESSAGE"));
+        }
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

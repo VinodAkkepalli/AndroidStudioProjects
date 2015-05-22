@@ -1,10 +1,13 @@
 package com.practice.shining.apppractice;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 
@@ -15,10 +18,20 @@ public class secondActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
 
-
-
         TextView textView = (TextView) findViewById(R.id.text1);
-        textView.setText((CharSequence) getIntent().getSerializableExtra("mainactivity_message"));
+        textView.setText((CharSequence) getIntent().getStringExtra("mainactivity_message"));
+
+        Button submit = (Button)findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra("TYPED_MESSAGE",((EditText)findViewById(R.id.edittext1)).getText().toString());
+                int SECOND_ACTIVITY_REQUEST_CODE = 2 ;
+                setResult(SECOND_ACTIVITY_REQUEST_CODE,intent);
+                finish();
+            }
+        });
     }
 
 
