@@ -46,10 +46,6 @@ public class MainActivity extends Activity {
 
         //for adding handler to plus button
 
-
-
-
-
         /*ListView listView = (ListView) findViewById(R.id.list);
         adapter = new CustomListAdapter(this, movieList);
         listView.setAdapter(adapter);
@@ -119,14 +115,6 @@ public class MainActivity extends Activity {
         AppController.getInstance().addToRequestQueue(movieReq);*/
     }
 
-    /*@Override
-    protected void onResume() {
-
-        Toast.makeText(this, "Image saved!!" + intent.getStringExtra(MediaStore.EXTRA_OUTPUT), Toast.LENGTH_LONG).show();
-
-        super.onResume();
-    }*/
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -163,6 +151,10 @@ public class MainActivity extends Activity {
 
             // start the image capture Intent
             startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
+
+            /*intent.setClass(this,LoadingDetailsActivity.class);
+            startActivity(intent);*/
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -173,8 +165,12 @@ public class MainActivity extends Activity {
         if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // Image captured and saved to fileUri specified in the Intent
-                Toast.makeText(this, "Image saved to:\n" +
-                        intent.getExtras().get("output"), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Image saved to:\n" +
+                        intent.getExtras().get(MediaStore.EXTRA_OUTPUT), Toast.LENGTH_LONG).show();
+
+            intent.setClass(this,LoadingDetailsActivity.class);
+            startActivity(intent);
+
             } else if (resultCode == RESULT_CANCELED) {
                 // User cancelled the image capture
             } else {
