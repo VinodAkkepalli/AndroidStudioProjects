@@ -22,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
-    private static final String KEY_PH_NO = "phone_number";
+    private static final String KEY_PH_NO = "phoneNumber";
 
     public DatabaseHandler(Context context){
         super(context, DB_NAME, null , DB_VERSION);
@@ -38,7 +38,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     //for creating new database
     @Override
     public void onCreate(SQLiteDatabase db) {
-        //String sqlQuery =  "create table " + DB_TABLE_NAME + " ( id integer primary key, name text, phoneNumber text )";
         String sqlQuery = "CREATE TABLE " + DB_TABLE_NAME + "("
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_PH_NO + " TEXT" + ")";
