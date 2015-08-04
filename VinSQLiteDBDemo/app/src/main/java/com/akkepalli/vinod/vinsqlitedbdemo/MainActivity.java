@@ -1,20 +1,43 @@
 package com.akkepalli.vinod.vinsqlitedbdemo;
 
 import android.app.Activity;
+import android.nfc.Tag;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+
 
 public class MainActivity extends Activity {
+
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DatabaseHandler db = new DatabaseHandler(this);
 
+        Log.d(TAG, "Staring DB Operations");
+
+        db.addContact(new Contact("Vinod", "0001"));
+        db.addContact(new Contact("Ravi", "100"));
+        db.addContact(new Contact("Anderson", "0009"));
+
+
+        // Reading all contacts
+        Log.d(TAG, "Reading all contacts..");
+        List<Contact> contacts = db.getAllContacts();
+
+        for (Contact cn : contacts) {
+            String log = "Id: " + cn.getId() + " ,Name: " + cn.getName() + " ,Phone: " + cn.getPhoneNumber();
+            // Writing Contacts to log
+            Log.d("Name: ", log);
+        }
     }
 
     @Override
