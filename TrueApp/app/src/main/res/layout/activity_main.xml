@@ -12,11 +12,19 @@
         android:text="Click me!!"
         android:layout_centerHorizontal="true"/>
 
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/clickmebutton">
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+
     <TextView
         android:id="@+id/tenthChar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/clickmebutton"
         android:text="10th character"/>
     <TextView
         android:id="@+id/everyTenthChar"
@@ -31,5 +39,6 @@
         android:layout_below="@+id/everyTenthChar"
         android:text="word count is"
         />
-
+    </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

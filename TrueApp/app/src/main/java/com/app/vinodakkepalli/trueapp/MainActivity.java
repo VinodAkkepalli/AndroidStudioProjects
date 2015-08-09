@@ -18,11 +18,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
-    private static Character textView1 = null;
+    private static volatile Character textView1 = null;
+    private static volatile String textView2;
+    private static volatile Map<String, Integer> wordsMap = null;
 
 
     @Override
@@ -30,20 +34,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        new TenthCharTask().execute();
+        new EveryTenthCharTask().execute();
+        new WordCounterTask().execute();
+
         Button clickMeButton = (Button) findViewById(R.id.clickmebutton);
 
         final TextView tv1 = (TextView) findViewById(R.id.tenthChar);
+        final TextView tv2 = (TextView) findViewById(R.id.everyTenthChar);
+        final TextView tv3 = (TextView) findViewById(R.id.wordCount);
 
         clickMeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                new TenthCharTask().execute();
-
-                Log.d(LOG_TAG, "##--Char is " + textView1);
-                Toast.makeText(getApplicationContext(),"Thanks", Toast.LENGTH_SHORT).show();
+                Log.d(LOG_TAG, "##--textView1 is " + textView1);
                 if(textView1 != null)
-                tv1.setText(textView1.toString());
+                    tv1.setText("10th Character is: " + textView1.toString());
+
+                Log.d(LOG_TAG, "##--textView2 is " + textView2);
+                tv2.setText("String with every 10th character is: " + textView2);
+
+                if(wordsMap != null){
+                    Log.d(LOG_TAG, "##--wordsMap is " + wordsMap.toString());
+                    tv3.setText("Number of distict words are: " + wordsMap.size());
+                }
+
             }
         });
     }
@@ -67,6 +83,12 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_refresh) {
+            new TenthCharTask().execute();
+            new EveryTenthCharTask().execute();
+            new WordCounterTask().execute();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -110,12 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 reader = new BufferedReader(new InputStreamReader(inputStream));
 
                 String line;
-                while (((line = reader.readLine()) != null)
-                    //&& (buffer.length() <10)
-                        ) {
-                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                    // But it does make debugging a *lot* easier if you print out the completed
-                    // buffer for debugging.
+                while (((line = reader.readLine()) != null)) {
                     buffer.append(line);
                 }
 
@@ -123,8 +140,6 @@ public class MainActivity extends AppCompatActivity {
                     // Stream was empty.  No point in parsing.
                     return null;
                 }
-
-                Log.d(LOG_TAG, "##--##"+buffer.toString() + "##--##");
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
@@ -149,11 +164,182 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Character character) {
-            //Log.d(LOG_TAG, "##--Char is " + character);
 
             textView1 = (character.equals(' ')) ? 'Z' : character;
-
             Log.d(LOG_TAG, "##--Char is " + textView1);
+        }
+    }
+
+    public class EveryTenthCharTask extends AsyncTask<Void, Void, String> {
+
+        private final String LOG_TAG = EveryTenthCharTask.class.getSimpleName();
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            // These two need to be declared outside the try/catch
+            // so that they can be closed in the finally block.
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+
+            StringBuffer buffer = new StringBuffer();
+
+            try {
+
+                // Construct the URL
+                final String FORECAST_BASE_URL = "http://www.truecaller.com/support";
+
+                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon().build();
+
+                URL url = new URL(builtUri.toString());
+
+                Log.v(LOG_TAG, "Built URI " + builtUri.toString());
+
+                // Create the request to truecaller, and open the connection
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                // Read the input stream into a String
+                InputStream inputStream = urlConnection.getInputStream();
+
+                if (inputStream == null) {
+                    // Nothing to do.
+                    return null;
+                }
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+                while (((line = reader.readLine()) != null)) {
+                    buffer.append(line);
+                }
+
+                if (buffer.length() == 0) {
+                    // Stream was empty.  No point in parsing.
+                    return null;
+                }
+
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+                // If the code didn't successfully get the weather data, there's no point in attemping
+                // to parse it.
+                return null;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
+                }
+            }
+
+            int n = 10;
+            int length = buffer.length();
+            String str = new String();
+            while(n < length ){
+                str = str + buffer.charAt(n);
+                n+=10;
+            }
+            Log.d(LOG_TAG, "##--sb is " + str);
+            return str;
+        }
+
+        @Override
+        protected void onPostExecute(String str) {
+
+            Log.d(LOG_TAG, "##--str is " + str);
+            textView2 = str;
+        }
+    }
+
+
+
+
+    public class WordCounterTask extends AsyncTask<Void, Void, Map<String, Integer>> {
+
+        private final String LOG_TAG = WordCounterTask.class.getSimpleName();
+        Map<String, Integer> uniqueWords = new HashMap<String, Integer>();
+
+        @Override
+        protected Map<String, Integer> doInBackground(Void... params) {
+
+            // These two need to be declared outside the try/catch
+            // so that they can be closed in the finally block.
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+
+            try {
+
+                // Construct the URL
+                final String FORECAST_BASE_URL = "http://www.truecaller.com/support";
+
+                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon().build();
+
+                URL url = new URL(builtUri.toString());
+
+                Log.v(LOG_TAG, "Built URI " + builtUri.toString());
+
+                // Create the request to truecaller, and open the connection
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
+
+                // Read the input stream into a String
+                InputStream inputStream = urlConnection.getInputStream();
+
+                if (inputStream == null) {
+                    // Nothing to do.
+                    return null;
+                }
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+                String lowerStr;
+                while (((line = reader.readLine()) != null)) {
+
+                    for (String string : line.split("[ !,?.]+")) {
+                        lowerStr = string.toLowerCase();
+                        if(uniqueWords.get(lowerStr) == null)
+                            uniqueWords.put(lowerStr, 1);
+                        else
+                            uniqueWords.put(lowerStr, uniqueWords.get(lowerStr) + 1);
+                    }
+                }
+
+                Log.d(LOG_TAG, uniqueWords.toString());
+
+
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "Error ", e);
+                // If the code didn't successfully get the weather data, there's no point in attemping
+                // to parse it.
+                return null;
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e(LOG_TAG, "Error closing stream", e);
+                    }
+                }
+            }
+
+            return uniqueWords;
+        }
+
+        @Override
+        protected void onPostExecute(Map<String, Integer> map) {
+
+            Log.d(LOG_TAG, "##--Char is " + map.toString());
+            wordsMap = new HashMap<String, Integer>(map);
+
         }
     }
 }
