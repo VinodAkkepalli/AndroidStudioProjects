@@ -25,19 +25,19 @@
         android:id="@+id/tenthChar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="10th character"/>
+        android:text="10th Character is: "/>
     <TextView
         android:id="@+id/everyTenthChar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tenthChar"
-        android:text="Every 10th character"/>
+        android:text="String with every 10th character is: "/>
     <TextView
         android:id="@+id/wordCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/everyTenthChar"
-        android:text="word count is"
+        android:text="Number of distinct words are: "
         />
     </RelativeLayout>
     </ScrollView>

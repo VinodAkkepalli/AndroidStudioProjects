@@ -34,12 +34,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //invoke the async task
         new TenthCharTask().execute();
         new EveryTenthCharTask().execute();
         new WordCounterTask().execute();
 
+        //initialization of all the UI elements of this activity
         Button clickMeButton = (Button) findViewById(R.id.clickmebutton);
-
         final TextView tv1 = (TextView) findViewById(R.id.tenthChar);
         final TextView tv2 = (TextView) findViewById(R.id.everyTenthChar);
         final TextView tv3 = (TextView) findViewById(R.id.wordCount);
@@ -48,16 +49,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //display the results on the UI
                 Log.d(LOG_TAG, "##--textView1 is " + textView1);
-                if(textView1 != null)
+                if(textView1 != null)   // to avoid null values initially
                     tv1.setText("10th Character is: " + textView1.toString());
 
                 Log.d(LOG_TAG, "##--textView2 is " + textView2);
                 tv2.setText("String with every 10th character is: " + textView2);
 
-                if(wordsMap != null){
+                if(wordsMap != null){   // to avoid null values initially
                     Log.d(LOG_TAG, "##--wordsMap is " + wordsMap.toString());
-                    tv3.setText("Number of distict words are: " + wordsMap.size());
+                    tv3.setText("Number of distinct words are: " + wordsMap.size());
                 }
 
             }
@@ -83,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        //Refresh button executes all the Async tasks
         if (id == R.id.action_refresh) {
             new TenthCharTask().execute();
             new EveryTenthCharTask().execute();
@@ -92,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * TenthCharTask
+     * Purpose: to get the network data in background thread and update the UI
+     * Return: a character which is at 10th location
+     */
     public class TenthCharTask extends AsyncTask<Void, Void, Character> {
 
         private final String LOG_TAG = TenthCharTask.class.getSimpleName();
@@ -137,14 +145,12 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
+                    // Stream was empty.
                     return null;
                 }
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
                 return null;
             } finally {
                 if (urlConnection != null) {
@@ -165,11 +171,18 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Character character) {
 
-            textView1 = (character.equals(' ')) ? 'Z' : character;
+            textView1 = (character.equals(' ')) ? ' ' : character;
             Log.d(LOG_TAG, "##--Char is " + textView1);
         }
     }
 
+    /**
+     *
+     * EveryTenthCharTask
+     * Purpose: to get the network data in background thread and update the UI
+     * Return: a string containing every 10th character of the given url text
+     *
+     */
     public class EveryTenthCharTask extends AsyncTask<Void, Void, String> {
 
         private final String LOG_TAG = EveryTenthCharTask.class.getSimpleName();
@@ -215,14 +228,12 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
+                    // Stream was empty.
                     return null;
                 }
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
                 return null;
             } finally {
                 if (urlConnection != null) {
@@ -256,8 +267,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
+    /**
+     *
+     * WordCounterTask
+     * Purpose: to get the network data in background thread and update the UI
+     * Return: a map which contains every distinct word and the number of times it occurred
+     *
+     */
 
     public class WordCounterTask extends AsyncTask<Void, Void, Map<String, Integer>> {
 
@@ -315,8 +331,6 @@ public class MainActivity extends AppCompatActivity {
 
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
-                // If the code didn't successfully get the weather data, there's no point in attemping
-                // to parse it.
                 return null;
             } finally {
                 if (urlConnection != null) {
