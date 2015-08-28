@@ -52,12 +52,6 @@ public class ForecastFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
-
-        /*sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        location_code = sharedPref.getString(getString(R.string.LOCATION_KEY), getString(R.string.default_location));
-
-        FetchWeatherTask weatherTask = new FetchWeatherTask();
-        weatherTask.execute(location_code);*/
     }
 
     private void updateWeather(){
