@@ -1,0 +1,119 @@
+{
+  "status": "OK",
+  "copyright": "Copyright (c) 2015 The New York Times Company. All Rights Reserved.",
+  "section": "technology",
+  "last_updated": "2015-08-18T10:15:06-05:00",
+  "num_results": 24,
+  "results": [
+{
+      "section": "Technology",
+      "subsection": "",
+      "title": "Peach, a Lunch Delivery Service, Plans Expansion",
+      "abstract": "Peach, which has secured a $8 million investment, uses a somewhat different model than PostMates and GrubHub.",
+      "url": "http://bits.blogs.nytimes.com/2015/08/18/peach-lunch-delivery-service-plans-expansion/",
+      "byline": "By STEPHANIE STROM",
+      "item_type": "Blogpost",
+      "updated_date": "2015-08-18T10:09:36-5:00",
+      "created_date": "2015-08-18T07:31:33-5:00",
+      "published_date": "2015-08-18T11:30:56-5:00",
+      "material_type_facet": "News",
+      "kicker": "Bits",
+      "des_facet": "",
+      "org_facet": [
+        "Peach"
+      ],
+      "per_facet": "",
+      "geo_facet": "",
+      "multimedia": ""
+    },
+    {
+      "section": "Technology",
+      "subsection": "",
+      "title": "U.S. Transfer of Internet Oversight Is Delayed",
+      "abstract": "The Commerce Department said it would delay by at least a year its plan to cede authority over the global address system for the web.",
+      "url": "http://www.nytimes.com/2015/08/18/technology/us-transfer-of-internet-oversight-is-delayed.html",
+      "byline": "By NATASHA SINGER",
+      "item_type": "Article",
+      "updated_date": "2015-08-18T06:22:35-5:00",
+      "created_date": "2015-08-18T06:22:37-5:00",
+      "published_date": "2015-08-18T04:00:00-5:00",
+      "material_type_facet": "News",
+      "kicker": "",
+      "des_facet": [
+        "Computers and the Internet",
+        "Regulation and Deregulation of Industry"
+      ],
+      "org_facet": [
+        "Internet Corp for Assigned Names and Numbers",
+        "Commerce Department"
+      ],
+      "per_facet": "",
+      "geo_facet": "",
+      "multimedia": ""
+    },
+    {
+      "section": "Technology",
+      "subsection": "",
+      "title": "Accomable: Lessons From an Inspiring Start-Up",
+      "abstract": "A new start-up Accomable seeks to be the “Airbnb for disabled people and anyone with mobility difficulties.”",
+      "url": "http://bits.blogs.nytimes.com/2015/08/17/accomable-lessons-from-an-inspiring-start-up/",
+      "byline": "By STEVE LOHR",
+      "item_type": "Blogpost",
+      "updated_date": "2015-08-18T09:44:36-5:00",
+      "created_date": "2015-08-17T12:28:06-5:00",
+      "published_date": "2015-08-17T16:26:19-5:00",
+      "material_type_facet": "News",
+      "kicker": "Bits",
+      "des_facet": [
+        "coding boot camp"
+      ],
+      "org_facet": [
+        "Accomable"
+      ],
+      "per_facet": "",
+      "geo_facet": "",
+      "multimedia": [
+        {
+          "url": "http://static01.nyt.com/images/2015/08/16/technology/Bits-Accomable-1/Bits-Accomable-1-thumbStandard.jpg",
+          "format": "Standard Thumbnail",
+          "height": 75,
+          "width": 75,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "Srin Madipalli at Sandy Neck Beach on Cape Cod. Mr. Madipalli, who has spinal muscular atrophy, co-founded Accomable, which he described as an Airbnb for those with mobility problems.",
+          "copyright": "Filipe Roldao"
+        },
+        {
+          "url": "http://static01.nyt.com/images/2015/08/16/technology/Bits-Accomable-1/Bits-Accomable-1-thumbLarge.jpg",
+          "format": "thumbLarge",
+          "height": 150,
+          "width": 150,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "Srin Madipalli at Sandy Neck Beach on Cape Cod. Mr. Madipalli, who has spinal muscular atrophy, co-founded Accomable, which he described as an Airbnb for those with mobility problems.",
+          "copyright": "Filipe Roldao"
+        },
+        {
+          "url": "http://static01.nyt.com/images/2015/08/16/technology/Bits-Accomable-1/Bits-Accomable-1-articleInline.jpg",
+          "format": "Normal",
+          "height": 107,
+          "width": 190,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "Srin Madipalli at Sandy Neck Beach on Cape Cod. Mr. Madipalli, who has spinal muscular atrophy, co-founded Accomable, which he described as an Airbnb for those with mobility problems.",
+          "copyright": "Filipe Roldao"
+        },
+        {
+          "url": "http://static01.nyt.com/images/2015/08/16/technology/Bits-Accomable-1/Bits-Accomable-1-mediumThreeByTwo210.jpg",
+          "format": "mediumThreeByTwo210",
+          "height": 140,
+          "width": 210,
+          "type": "image",
+          "subtype": "photo",
+          "caption": "Srin Madipalli at Sandy Neck Beach on Cape Cod. Mr. Madipalli, who has spinal muscular atrophy, co-founded Accomable, which he described as an Airbnb for those with mobility problems.",
+          "copyright": "Filipe Roldao"
+        }
+      ]
+    }
+  ]
+}
