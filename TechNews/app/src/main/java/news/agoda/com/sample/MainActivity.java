@@ -66,7 +66,10 @@ public class MainActivity extends ListActivity {
                 intent.putExtra("title", title);
                 intent.putExtra("storyURL", newsEntity.getArticleUrl());
                 intent.putExtra("summary", newsEntity.getSummary());
-                intent.putExtra("imageURL", newsEntity.getMediaEntity().get(0).getUrl());
+                if(newsEntity.getMediaEntity().size() == 0)
+                    intent.putExtra("imageURL", "");
+                else
+                    intent.putExtra("imageURL", newsEntity.getMediaEntity().get(newsEntity.getMediaEntity().size()-1).getUrl());
                 startActivity(intent);
             }
         });
@@ -95,7 +98,7 @@ public class MainActivity extends ListActivity {
     }
 
     private String loadResource() {
-        InputStream inputStream = getResources().openRawResource(R.raw.news_list_small);
+        InputStream inputStream = getResources().openRawResource(R.raw.news_list);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
 

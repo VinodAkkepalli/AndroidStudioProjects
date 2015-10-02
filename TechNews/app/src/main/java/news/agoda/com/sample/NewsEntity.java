@@ -29,12 +29,15 @@ public class NewsEntity {
             articleUrl = jsonObject.getString("url");
             byline = jsonObject.getString("byline");
             publishedDate = jsonObject.getString("published_date");
-            JSONArray mediaArray = jsonObject.getJSONArray("multimedia");
-            for (int i = 0; i < mediaArray.length(); i++) {
-                JSONObject mediaObject = (JSONObject)mediaArray.getJSONObject(i);
-                MediaEntity mediaEntity = new MediaEntity(mediaObject);
-                mediaEntityList.add(mediaEntity);
-                Log.e(TAG, "++++Vinod++++");
+            if(jsonObject.getJSONArray("multimedia") == null){
+                mediaEntityList = null;
+            }else {
+                JSONArray mediaArray = jsonObject.getJSONArray("multimedia");
+                for (int i = 0; i < mediaArray.length(); i++) {
+                    JSONObject mediaObject = (JSONObject) mediaArray.getJSONObject(i);
+                    MediaEntity mediaEntity = new MediaEntity(mediaObject);
+                    mediaEntityList.add(mediaEntity);
+                }
             }
 
         } catch (JSONException exception) {

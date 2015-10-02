@@ -30,8 +30,10 @@ public class NewsListAdapter extends ArrayAdapter {
         NewsEntity newsEntity = (NewsEntity) getItem(position);
         List<MediaEntity> mediaEntityList = newsEntity.getMediaEntity();
         String thumbnailURL = "";
-        MediaEntity mediaEntity = mediaEntityList.get(0);
-        thumbnailURL = mediaEntity.getUrl();
+        if(mediaEntityList.size()>0) {
+            MediaEntity mediaEntity = mediaEntityList.get(0);
+            thumbnailURL = mediaEntity.getUrl();
+        }
 
         ViewHolder viewHolder;
         if (convertView == null) {
