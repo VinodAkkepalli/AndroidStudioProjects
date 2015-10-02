@@ -2,6 +2,7 @@ package news.agoda.com.sample;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -37,20 +38,9 @@ public class MainActivity extends ListActivity {
 
         newsItemList = new ArrayList<>();
 
-        String newsListSource = loadResource();
-        JSONObject jsonObject;
-
-        try {
-            jsonObject = new JSONObject(newsListSource);
-            JSONArray resultArray = jsonObject.getJSONArray("results");
-            for (int i = 0; i < resultArray.length(); i++) {
-                JSONObject newsObject = resultArray.getJSONObject(i);
-                NewsEntity newsEntity = new NewsEntity(newsObject);
-                newsItemList.add(newsEntity);
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, "fail to parse json string");
-        }
+        //moved the json object fetch logic to an AsyncTask called FetchNewsTask
+        FetchNewsTask newsTask = new FetchNewsTask();
+        newsTask.execute();
 
         NewsListAdapter adapter = new NewsListAdapter(this, R.layout.list_item_news, newsItemList);
         setListAdapter(adapter);
@@ -97,7 +87,7 @@ public class MainActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private String loadResource() {
+    /*private String loadResource() {
         InputStream inputStream = getResources().openRawResource(R.raw.news_list);
         Writer writer = new StringWriter();
         char[] buffer = new char[1024];
@@ -115,5 +105,53 @@ public class MainActivity extends ListActivity {
         }
 
         return writer.toString();
+    }*/
+
+
+    //AsyncTask to perform time consuming operations such as fetching data over network
+    //In our case, the task is simplified as the json is available resource/raw folder
+    public class FetchNewsTask extends AsyncTask<Void, Void, String>{
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            InputStream inputStream = getResources().openRawResource(R.raw.news_list);
+            Writer writer = new StringWriter();
+            char[] buffer = new char[1024];
+
+            try {
+                InputStreamReader inputReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferReader = new BufferedReader(inputReader);
+                int n;
+                while ((n = bufferReader.read(buffer)) != -1) {
+                    writer.write(buffer, 0, n);
+                }
+                inputStream.close();
+            } catch (IOException ioException) {
+                return null;
+            }
+
+            return writer.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String newsListSource) {
+            super.onPostExecute(newsListSource);
+
+            JSONObject jsonObject;
+
+            try {
+                jsonObject = new JSONObject(newsListSource);
+                JSONArray resultArray = jsonObject.getJSONArray("results");
+                for (int i = 0; i < resultArray.length(); i++) {
+                    JSONObject newsObject = resultArray.getJSONObject(i);
+                    NewsEntity newsEntity = new NewsEntity(newsObject);
+                    newsItemList.add(newsEntity);
+                }
+            } catch (JSONException e) {
+                Log.e(TAG, "fail to parse json string");
+            }
+
+        }
     }
 }

@@ -24,11 +24,13 @@ public class NewsEntity {
     public NewsEntity(JSONObject jsonObject) {
         try {
             mediaEntityList = new ArrayList<>();
-            title = jsonObject.getString("title");
-            summary = jsonObject.getString("abstract");
-            articleUrl = jsonObject.getString("url");
-            byline = jsonObject.getString("byline");
-            publishedDate = jsonObject.getString("published_date");
+
+            //Making a special check for each item required by checking if the item is empty
+            title = ((jsonObject.getString("title") == null) ? "": (jsonObject.getString("title")));
+            summary = ((jsonObject.getString("abstract") == null) ? "": (jsonObject.getString("abstract")));
+            articleUrl = ((jsonObject.getString("url") == null) ? "": (jsonObject.getString("url")));
+            byline = ((jsonObject.getString("byline") == null) ? "": (jsonObject.getString("byline")));
+            publishedDate = ((jsonObject.getString("published_date") == null) ? "": (jsonObject.getString("published_date")));
             if(jsonObject.getJSONArray("multimedia") == null){
                 mediaEntityList = null;
             }else {
