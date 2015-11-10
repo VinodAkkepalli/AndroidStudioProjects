@@ -23,6 +23,15 @@ import java.util.List;
  */
 public class CustomListAdapter extends BaseAdapter{
 
+    //ViewHolder pattern for smooth scrolling of the listview
+    private static class ViewHolder{
+        NetworkImageView thumbNail;
+        TextView title;
+        TextView rating;
+        TextView nRatings;
+        TextView fPrice;
+    }
+
     // Log tag
     private static final String TAG = CustomListAdapter.class.getSimpleName();
 
@@ -53,39 +62,45 @@ public class CustomListAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+        ViewHolder viewHolder;
+
         if(inflater == null){
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
         if(convertView == null){
             convertView = inflater.inflate(R.layout.list_row, null);
+            viewHolder = new ViewHolder();
+
+            viewHolder.thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
+            viewHolder.title = (TextView) convertView.findViewById(R.id.title);
+            viewHolder.rating = (TextView) convertView.findViewById(R.id.rating);
+            viewHolder.nRatings = (TextView) convertView.findViewById(R.id.nratings);
+            viewHolder.fPrice = (TextView) convertView.findViewById(R.id.fprice);
+
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
         if(imageLoader == null){
             imageLoader = AppController.getInstance().getImageLoader();
         }
 
-        NetworkImageView thumbNail = (NetworkImageView) convertView.findViewById(R.id.thumbnail);
-
-        TextView title = (TextView) convertView.findViewById(R.id.title);
-        TextView rating = (TextView) convertView.findViewById(R.id.rating);
-        TextView nRatings = (TextView) convertView.findViewById(R.id.nratings);
-        TextView fPrice = (TextView) convertView.findViewById(R.id.fprice);
-
-        //getting movie data for the row
         Inventory m = inventoryItems.get(position);
 
-        //thumbnail image
-        thumbNail.setImageUrl(m.getImageUrl(), imageLoader);
+        if(m != null) {
+            viewHolder.thumbNail.setImageUrl(m.getImageUrl(), imageLoader);
+            viewHolder.title.setText(m.getTitle());
+            viewHolder.rating.setText("Avg. Rating: " + String.valueOf(m.getRating()));
+            viewHolder.nRatings.setText("Total Ratings: " + String.valueOf(m.getnRatings()));
+            viewHolder.fPrice.setText("Final Price: " + String.valueOf(m.getfPrice()));
+        }
 
-        title.setText(m.getTitle());
-        rating.setText("Avg. Rating: " + String.valueOf(m.getRating()));
-        nRatings.setText("Total Ratings: " + String.valueOf(m.getnRatings()));
-        fPrice.setText("Final Price: " + String.valueOf(m.getfPrice()));
-
-        Log.d(TAG, title.getText().toString());
-        Log.d(TAG, rating.getText().toString());
-        Log.d(TAG, nRatings.getText().toString());
-        Log.d(TAG, fPrice.getText().toString());
+        Log.d(TAG, viewHolder.title.getText().toString());
+        Log.d(TAG, viewHolder.rating.getText().toString());
+        Log.d(TAG, viewHolder.nRatings.getText().toString());
+        Log.d(TAG, viewHolder.fPrice.getText().toString());
 
         return convertView;
     }
