@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 //import com.shine.volley.R;
-import com.practice.shine.volley.R;
+import com.shine.volley.R;
 import com.shine.volley.app.AppController;
 import com.shine.volley.model.Inventory;
 import com.android.volley.toolbox.ImageLoader;
