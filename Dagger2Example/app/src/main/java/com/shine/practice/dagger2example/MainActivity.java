@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.shine.practice.component.DaggerVehicleComponent;
 import com.shine.practice.component.VehicleComponent;
+import com.shine.practice.model.Motor;
 import com.shine.practice.model.Vehicle;
 import com.shine.practice.module.VehicleModule;
 
@@ -22,9 +23,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        VehicleComponent vehicleComponent = DaggerVehicleComponent.builder().vehicleModule(new VehicleModule()).build();
-        vehicle = vehicleComponent.provideVehicle();
+        /*//without using '@Inject' for Vehicle, and instantiating explicitly as below
+        //works just as fine
+        vehicle = new Vehicle(new Motor());*/
 
+        //Dagger magic
+        DaggerVehicleComponent.create().inject(this);
+
+        vehicle.increaseSpeed(10);
         Toast.makeText(getApplicationContext(),String.valueOf(vehicle.getSpeed()), Toast.LENGTH_LONG).show();
     }
 }

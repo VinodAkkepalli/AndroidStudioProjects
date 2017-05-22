@@ -1,5 +1,6 @@
 package com.shine.practice.component;
 
+import com.shine.practice.dagger2example.MainActivity;
 import com.shine.practice.model.Vehicle;
 import com.shine.practice.module.VehicleModule;
 
@@ -14,6 +15,9 @@ import dagger.Component;
 @Singleton
 @Component(modules = {VehicleModule.class})
 public interface VehicleComponent {
+
+    //This makes resolve Vehicle object dependency for MainActivity
+    void inject(MainActivity mainActivity);
 
     Vehicle provideVehicle();
 }
