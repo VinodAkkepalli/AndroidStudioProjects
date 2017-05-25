@@ -9,22 +9,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends Activity {
-    private ProgressBar mProgress;
-    private int mProgressStatus = 0;
-    TextView percentage = null;
+    @BindView(R.id.progress_bar) ProgressBar mProgress;
+    @BindView(R.id.percentage) TextView percentage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mProgress = (ProgressBar) findViewById(R.id.progress_bar);
-
-        percentage = (TextView) findViewById(R.id.percentage);
+        //Bind ButterKnife
+        ButterKnife.bind(this);
 
         new CountProgress().execute();
-
     }
 
 
