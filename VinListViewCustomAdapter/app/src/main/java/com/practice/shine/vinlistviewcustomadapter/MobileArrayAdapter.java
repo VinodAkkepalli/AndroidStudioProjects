@@ -1,6 +1,8 @@
 package com.practice.shine.vinlistviewcustomadapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,39 +10,65 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by Vinod Akkepalli on 12/13/14.
  */
-public class MobileArrayAdapter extends ArrayAdapter<String> {
+class MobileArrayAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final String[] values;
 
-    public MobileArrayAdapter(Context context, String[] values) {
+    MobileArrayAdapter(Context context, String[] values) {
         super(context, R.layout.activity_list_mobile, values);
         this.context = context;
         this.values = values;
+        ButterKnife.bind((Activity) context);
     }
 
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+        ViewHolder holder;
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View rowView = inflater.inflate(R.layout.activity_list_mobile, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.name);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
-        String s = values[position];
-        textView.setText(s);
-
-        if(s.equals("Android")){
-            imageView.setImageResource(R.drawable.android);
-        }else if(s.equals("iOS")){
-            imageView.setImageResource(R.drawable.ios);
-        }else if(s.equals("WindowsMobile")){
-            imageView.setImageResource(R.drawable.windows);
-        }else if(s.equals("Blackberry")){
-            imageView.setImageResource(R.drawable.blackberry);
+        if (convertView != null) {
+            holder = (ViewHolder) convertView.getTag();
+        } else {
+            convertView = inflater.inflate(R.layout.activity_list_mobile, parent, false);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
         }
 
-        return rowView;
+
+        String s = values[position];
+        holder.textView.setText(s);
+
+        switch (s){
+            case "Android":
+                holder.imageView.setImageResource(R.drawable.android);
+                break;
+            case "iOS":
+                holder.imageView.setImageResource(R.drawable.ios);
+                break;
+            case "WindowsMobile":
+                holder.imageView.setImageResource(R.drawable.windows);
+                break;
+            default:
+                holder.imageView.setImageResource(R.drawable.blackberry);
+        }
+
+        return convertView;
+    }
+
+    static class ViewHolder {
+        @BindView(R.id.name) TextView textView;
+        @BindView(R.id.logo) ImageView imageView;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }
