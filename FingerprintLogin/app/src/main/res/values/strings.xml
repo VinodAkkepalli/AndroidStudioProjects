@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Fingerprint Login</string>
+    <string name="scan_text">Scan your fingerprint</string>
+    <string name="button_fp_check">Fingerprint Check</string>
+    <string name="scan_activity">Fingerprint Scan Screen</string>
+    <string name="fp_image_description">Fingerprint Scan Image</string>
+</resources>
