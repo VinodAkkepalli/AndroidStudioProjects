@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.shine.vinodakkepalli.fingerprintlogin.FingerprintAuthenticationActivity">
+    tools:context="com.shine.vinodakkepalli.fingerprintlogin.MainActivity">
 
     <TextView
         android:id="@+id/fp_label"
@@ -16,7 +16,8 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
+        app:layout_constraintVertical_bias="0.2"
+        android:visibility="invisible"/>
 
     <ImageView
         android:id="@+id/fp_image"
@@ -29,6 +30,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4"
-        android:contentDescription="@string/fp_image_description"/>
+        android:contentDescription="@string/fp_image_description"
+        android:visibility="invisible"/>
 
 </android.support.constraint.ConstraintLayout>

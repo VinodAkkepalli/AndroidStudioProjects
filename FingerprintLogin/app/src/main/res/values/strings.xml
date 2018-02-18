@@ -4,4 +4,6 @@
     <string name="button_fp_check">Fingerprint Check</string>
     <string name="scan_activity">Fingerprint Scan Screen</string>
     <string name="fp_image_description">Fingerprint Scan Image</string>
+    <string name="fp_auth_success_message">Fingerprint Authentication Success!!</string>
+    <string name="fp_auth_failed_message">Fingerprint Authentication Failed!!</string>
 </resources>
