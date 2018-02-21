@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MyBroadcast Receiver</string>
+    <string name="broadcast_msg">Broadcast Toast will be displayed on plugging headset!!</string>
+</resources>
