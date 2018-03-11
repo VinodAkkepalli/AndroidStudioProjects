@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PendingIntent Example</string>
+    <string name="register">PendingIntent register</string>
+    <string name="unregister">PendingIntent unregister</string>
+</resources>
