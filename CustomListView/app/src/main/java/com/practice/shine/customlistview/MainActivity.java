@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
     // Movies json url
-    private static final String url = "http://api.androidhive.info/json/movies.json";
+    private static final String url = "https://api.androidhive.info/json/movies.json";
     private ProgressDialog pDialog;
     private final List<Movie> movieList = new ArrayList<>();
     private CustomListAdapter adapter;
