@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
     // Log tag
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    // Movies json url
+    //Schools json url
     private static final String url = "https://data.cityofnewyork.us/resource/s3k6-pzi2.json";
     private ProgressDialog pDialog;
     private final List<School> schoolList = new ArrayList<>();
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
         pDialog.show();
 
         // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url,
+        JsonArrayRequest schoolReq = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
@@ -130,7 +130,7 @@ public class MainActivity extends Activity {
         });
 
         // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(movieReq);
+        AppController.getInstance().addToRequestQueue(schoolReq);
     }
 
     @Override

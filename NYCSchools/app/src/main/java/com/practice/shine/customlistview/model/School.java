@@ -14,17 +14,6 @@ public class School {
     public School(){
     }
 
-    public School(String name, String dbn, String zip, String city, String phoneNumber, String location, String email, String website) {
-        this.name = name;
-        this.dbn = dbn;
-        this.zip = zip;
-        this.city = city;
-        this.phoneNumber = phoneNumber;
-        this.location = location;
-        this.email = email;
-        this.website = website;
-    }
-
     public String getName() {
         return name;
     }
