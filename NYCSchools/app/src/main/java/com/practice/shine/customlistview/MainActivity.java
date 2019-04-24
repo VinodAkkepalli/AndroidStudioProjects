@@ -2,9 +2,12 @@ package com.practice.shine.customlistview;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.android.volley.Response;
@@ -95,6 +98,34 @@ public class MainActivity extends Activity {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 hidePDialog();
 
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                School schoolItem = schoolList.get(position);
+
+                String name = schoolItem.getName();
+                String dbn = schoolItem.getDbn();
+                String zip = schoolItem.getZip();
+                String city = schoolItem.getCity();
+                String phoneNumber = schoolItem.getPhoneNumber();
+                String location = schoolItem.getLocation();
+                String email = schoolItem.getEmail();
+                String website = schoolItem.getWebsite();
+
+                Intent intent = new Intent(MainActivity.this, DetailViewActivity.class);
+                intent.putExtra(DetailViewActivity.ARG_SCHOOL_NAME, name);
+                intent.putExtra(DetailViewActivity.ARG_SCHOOL_DBN, dbn);
+                intent.putExtra(DetailViewActivity.ARG_SCHOOL_ZIP, zip);
+                intent.putExtra(DetailViewActivity.ARG_SCHOOL_CITY, city);
+                intent.putExtra(DetailViewActivity.ARG_SCHOOL_EMAIL, email);
+                intent.putExtra(DetailViewActivity.ARG_SCHOOL_LOCATION, location);
+                intent.putExtra(DetailViewActivity.ARG_SCHOOL_PHONE_NUMBER, phoneNumber);
+                intent.putExtra(DetailViewActivity.ARG_SCHOOL_WEBSITE, website);
+
+                startActivity(intent);
             }
         });
 
