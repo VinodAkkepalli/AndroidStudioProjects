@@ -7,7 +7,7 @@ model {
 
         defaultConfig.with {
             applicationId = "com.example.hellojni"
-            minSdkVersion.apiLevel = 4
+            minSdkVersion.apiLevel = 16
             targetSdkVersion.apiLevel = 23
         }
     }
@@ -17,6 +17,7 @@ model {
      */
     android.ndk {
         moduleName = "hello-jni"
+        ldLibs.addAll(["android", "log"])
         /*
          * Other ndk flags configurable here are
          * cppFlags.add("-fno-rtti")
